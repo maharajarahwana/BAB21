@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>BAB21</title>
+    
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>BAB1</title>
+    
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Latihan Kosakata</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  .card {
+    background: white;
+    padding: 30px;
+    width: 400px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  input {
+    width: 90%;
+    padding: 8px;
+    margin-top: 15px;
+  }
+  button {
+    margin-top: 20px;
+    padding: 8px 15px;
+    cursor: pointer;
+  }
+  .result {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .wrong { color: red; }
+  .correct { color: green; }
+  ol { text-align:left; max-height:400px; overflow:auto; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h2 id="question"></h2>
+  <input type="text" id="answerInput" placeholder="Tulis jawaban di sini">
+  <br>
+  <button id="nextBtn">Selanjutnya</button>
+</div>
+
+<script>
+let questions = [
+{ soal: "병원", jawaban: "rumah sakit" },
+{ soal: "허리", jawaban: "pinggang" },
+{ soal: "접수를 하다", jawaban: "pendaftaran" },
+{ soal: "손목", jawaban: "pergelangan tangan" },
+{ soal: "진료", jawaban: "pemeriksaan medis" },
+{ soal: "손가락", jawaban: "jari tangan" },
+{ soal: "신체", jawaban: "tubuh" },
+{ soal: "다리", jawaban: "kaki" },
+{ soal: "증상", jawaban: "gejala" },
+{ soal: "발목", jawaban: "pergelangan kaki" },
+{ soal: "체계", jawaban: "sistem" },
+{ soal: "무릎", jawaban: "lutut" },
+{ soal: "기다리다", jawaban: "menunggu" },
+{ soal: "발", jawaban: "kaki" },
+{ soal: "체온을 재다", jawaban: "mengukur suhu tubuh" },
+{ soal: "감기에 걸리다", jawaban: "terkena flu" },
+{ soal: "치료를 하다", jawaban: "pemeriksaan" },
+{ soal: "머리가 아프다", jawaban: "sakit kepala" },
+{ soal: "엑스레이를 찍다", jawaban: "rontgen" },
+{ soal: "배가 아프다", jawaban: "sakit perut" },
+{ soal: "주사를 맞다", jawaban: "disuntik" },
+{ soal: "다리를 다치다", jawaban: "kaki terluka" },
+{ soal: "수술을 하다", jawaban: "operasi" },
+{ soal: "눈병이 나다", jawaban: "penyakit mata" },
+{ soal: "지 마세요", jawaban: "jangan / dilarang" },
+{ soal: "약", jawaban: "obat" },
+{ soal: "푹 쉬세요", jawaban: "istirahat yang cukup" },
+{ soal: "신분증", jawaban: "kartu identitas" },
+{ soal: "의료 기관", jawaban: "lembaga medis" },
+{ soal: "처방전", jawaban: "resep obat" },
+{ soal: "규모", jawaban: "skala / ukuran" },
+{ soal: "저희", jawaban: "kami / kita" },
+{ soal: "보건소", jawaban: "puskesmas" },
+{ soal: "처음", jawaban: "pertama kali" },
+{ soal: "병상", jawaban: "tempat tidur (RS)" },
+{ soal: "전화 번호", jawaban: "nomor telepon" },
+{ soal: "상급 종합 병원", jawaban: "rumah sakit besar" },
+{ soal: "보호자", jawaban: "pendamping / wali" },
+{ soal: "진료실", jawaban: "ruang periksa" },
+{ soal: "전문 분야", jawaban: "bidang spesialis" },
+{ soal: "부르다", jawaban: "memanggil" },
+{ soal: "내과", jawaban: "klinik penyakit dalam" },
+{ soal: "(으)면", jawaban: "jika" },
+{ soal: "정형외과", jawaban: "klinik ortopedi" },
+{ soal: "머리", jawaban: "kepala" },
+{ soal: "치과", jawaban: "klinik gigi" },
+{ soal: "눈", jawaban: "mata / salju" },
+{ soal: "안과", jawaban: "klinik mata" },
+{ soal: "귀", jawaban: "telinga" },
+{ soal: "소아청소년과", jawaban: "klinik anak" },
+{ soal: "코", jawaban: "hidung" },
+{ soal: "이비인후과", jawaban: "klinik THT" },
+{ soal: "얼굴", jawaban: "wajah" },
+{ soal: "피부과", jawaban: "klinik kulit" },
+{ soal: "입", jawaban: "mulut" },
+{ soal: "산부인과", jawaban: "klinik ibu hamil" },
+{ soal: "이", jawaban: "gigi" },
+{ soal: "성형외과", jawaban: "bedah plastik" },
+{ soal: "어깨", jawaban: "pundak / bahu" },
+{ soal: "한의원", jawaban: "klinik tradisional korea" },
+{ soal: "팔", jawaban: "lengan" },
+{ soal: "반드시", jawaban: "pastikan" },
+{ soal: "가슴", jawaban: "dada" },
+{ soal: "건강보험증", jawaban: "kartu asuransi kesehatan" },
+{ soal: "손", jawaban: "tangan" },
+];
+
+// Acak soal
+questions = questions.sort(() => Math.random() - 0.5);
+
+let index = 0;
+let score = 0;
+let userAnswers = [];
+
+const questionEl = document.getElementById("question");
+const answerInput = document.getElementById("answerInput");
+const nextBtn = document.getElementById("nextBtn");
+const card = document.querySelector(".card");
+
+function showQuestion() {
+  questionEl.textContent = "Soal " + (index + 1) + ": " + questions[index].soal;
+  answerInput.value = "";
+  answerInput.focus();
+}
+
+nextBtn.addEventListener("click", () => {
+  const userAnswer = answerInput.value.trim().toLowerCase();
+  userAnswers[index] = userAnswer; // simpan jawaban sesuai index
+
+  if (userAnswer === questions[index].jawaban) {
+    score++;
+  }
+
+  index++;
+  if (index < questions.length) {
+    showQuestion();
+  } else {
+    showResult();
+  }
+});
+
+function showResult() {
+  let answerList = "";
+  questions.forEach((q, i) => {
+    if (userAnswers[i] === q.jawaban) {
+      answerList += `<li>${q.soal} = <span class="correct">${q.jawaban}</span></li>`;
+    } else {
+      answerList += `<li>${q.soal} = <span class="correct">${q.jawaban}</span><br>
+                     Jawaban kamu: <span class="wrong">${userAnswers[i] || "(kosong)"}</span></li>`;
+    }
+  });
+
+  card.innerHTML = `
+    <h2>Hasil</h2>
+    <p class="result">Nilai: ${score} / ${questions.length}</p>
+    <hr>
+    <p>Kunci Jawaban:</p>
+    <ol>${answerList}</ol>
+  `;
+}
+
+showQuestion();
+</script>
+
+</body>
+</html>
+    
+  </body>
+  
+</html>
